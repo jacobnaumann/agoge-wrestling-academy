@@ -1,0 +1,84 @@
+.about {
+  position: relative;
+  overflow: hidden;
+  padding: 100px 4%;
+  border-top: 1px solid var(--bronze);
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.78) 0%, rgba(59, 42, 28, 0.35) 50%, rgba(0, 0, 0, 0.86) 100%),
+    var(--brown-dark);
+}
+.about-inner {
+  position: relative; z-index: 1;
+  max-width: 1150px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 5rem;
+  align-items: center;
+}
+.about-text {
+  font-size: 1rem; line-height: 1.85; color: var(--gray);
+  font-weight: 300; margin-top: 1.5rem;
+}
+.about-text p + p { margin-top: 1rem; }
+
+.about-badge {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  background: rgba(168, 129, 71, 0.12);
+  border: 1px solid var(--bronze);
+  border-radius: 30px;
+  padding: 0.5rem 1.1rem;
+  font-family: var(--font-display);
+  font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 1.8rem;
+  color: var(--bone);
+}
+.about-badge-icon { font-size: 1.1rem; }
+
+.logo-display {
+  display: flex; flex-direction: column; align-items: center; gap: 2rem;
+}
+.logo-container {
+  background: var(--bone);
+  border-radius: 16px;
+  border: 2px solid var(--gold);
+  padding: 3rem 4rem;
+  display: flex; justify-content: center; align-items: center;
+  width: 100%;
+  max-width: 360px;
+}
+.logo-placeholder {
+  display: flex; flex-direction: column; align-items: center;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+}
+.logo-placeholder-mark {
+  font-size: 5rem; font-weight: 900; line-height: 1;
+  color: var(--red);
+}
+.logo-placeholder-name {
+  font-size: 2.2rem; font-weight: 900; letter-spacing: 0.18em;
+  color: var(--brown); margin-top: 0.4rem;
+}
+.logo-placeholder-sub {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.4em;
+  color: var(--bronze); margin-top: 0.3rem;
+}
+
+.ig-follow-card {
+  background: rgba(227, 222, 212, 0.05);
+  border: 1px solid var(--bronze);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  display: flex; align-items: center; gap: 1.2rem;
+  width: 100%; max-width: 360px;
+  text-decoration: none; color: var(--bone);
+  transition: background 0.2s;
+}
+.ig-follow-card:hover { background: rgba(168, 129, 71, 0.15); }
+.ig-big-icon { font-size: 2.2rem; }
+.ig-text-label { font-size: 0.75rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+.ig-handle { font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; }
+.ig-followers { font-size: 0.8rem; color: var(--gray); }
+
+@media (max-width: 960px) {
+  .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+}

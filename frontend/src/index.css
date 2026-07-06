@@ -1,0 +1,132 @@
+/* ─── AGOGE WRESTLING ACADEMY — GLOBAL THEME ─── */
+
+:root {
+  /* Brand palette */
+  --black: #000000;        /* Main site background */
+  --bone: #e3ded4;         /* Headlines, primary text */
+  --gold: #a88147;         /* Primary brand: borders, buttons */
+  --bronze: #795e36;       /* Hover states, dividers, secondary accents */
+  --red: #801c10;          /* Alerts, highlights, CTA accents */
+  --brown: #3b2a1c;        /* Cards, panels, subtle backgrounds */
+  --gray: #b3aca1;         /* Secondary text */
+
+  /* Derived shades */
+  --brown-dark: #241a11;
+  --near-black: #0c0906;
+
+  /* Typography */
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--black);
+  color: var(--bone);
+  overflow-x: hidden;
+}
+
+/* ─── BUTTONS ─── */
+.btn-primary {
+  background: var(--gold); color: var(--black);
+  font-family: var(--font-display);
+  font-weight: 800; font-size: 1rem; letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.9rem 2.4rem; border-radius: 4px;
+  text-decoration: none; border: none; cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-block;
+}
+.btn-primary:hover { background: var(--bronze); transform: translateY(-1px); }
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--bronze);
+  color: var(--bone);
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 1rem; letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.9rem 2.4rem; border-radius: 4px;
+  text-decoration: none; cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  display: inline-block;
+}
+.btn-outline:hover { border-color: var(--gold); background: rgba(168, 129, 71, 0.12); }
+
+/* ─── SECTION SHARED ─── */
+.section-label {
+  font-family: var(--font-display);
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gray);
+  margin-bottom: 0.9rem;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.section-label::before {
+  content: 'Λ'; font-size: 0.75rem; color: var(--gold);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900; line-height: 1;
+  text-transform: uppercase;
+  color: var(--bone);
+}
+
+.section-note {
+  margin-top: 2rem;
+  font-size: 0.85rem; color: rgba(227, 222, 212, 0.4);
+  text-align: center;
+}
+
+/* Subtle texture overlay used by most sections */
+.texture-overlay::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(227, 222, 212, 0.5) 1px, transparent 1px),
+    radial-gradient(circle, rgba(227, 222, 212, 0.25) 1px, transparent 1px);
+  background-size: 60px 60px, 30px 30px;
+  background-position: 0 0, 15px 15px;
+  opacity: 0.04;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── FORMS ─── */
+.form-group label {
+  display: block;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--gray);
+  margin-bottom: 0.4rem;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  background: rgba(227, 222, 212, 0.05);
+  border: 1px solid var(--bronze);
+  border-radius: 5px;
+  padding: 0.75rem 1rem;
+  color: var(--bone);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: var(--gold); }
+.form-group select option { background: var(--brown-dark); }
+.form-group textarea { min-height: 110px; resize: vertical; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}

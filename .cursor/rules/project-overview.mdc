@@ -1,0 +1,46 @@
+---
+description: Agoge Wrestling Academy project overview, structure, and stack
+alwaysApply: true
+---
+
+# Agoge Wrestling Academy
+
+MERN-stack marketing/info website for a wrestling gym. Customers visit to view
+info (programs, schedule, staff, pricing) and enroll. Enrollment links out to an
+external registration platform (placeholder links for now).
+
+## Design reference
+
+The layout replicates `Beebe/beebetrained-source.html` (extracted from the
+client-provided view-source file `Beebe/view-source_beebetrained.com.html`) with
+Agoge branding and a black/gold/red Spartan color scheme. See the
+`design-system` rule for the palette.
+
+## Structure
+
+- `frontend/` — Vite + React 19 (JSX) single-page site. Builds to `frontend/build/`.
+  - `src/data/siteContent.js` — ALL site copy/content lives here (currently placeholders).
+  - `src/components/` — one component per page section, each with a co-located `.css` file.
+  - `src/index.css` — theme variables, buttons, shared section styles, forms.
+- `backend/` — Express 5 + Mongoose scaffold (NOT wired to the frontend yet).
+  Routes return 501; contact form uses mailto and reviews use localStorage until wired.
+- `Beebe/` — reference source from the site the client wants replicated. Do not modify.
+
+## Current placeholder status
+
+Business content (address, phone, email, coach names, stats, schedule,
+registration URLs, Instagram, logo) is ALL placeholder in `siteContent.js`.
+The logo is a temporary Λ text mark until the client provides a real one.
+
+## Planned (pre-launch)
+
+Once real content is finalized: add build-time pre-rendering (static HTML in
+`frontend/build/`) plus local SEO work — LocalBusiness JSON-LD schema, localized
+copy/keywords, sitemap, proper title/meta descriptions.
+
+## Workflow rules
+
+- Do NOT run `npm run dev` / `node server.js` — the user runs these themselves.
+- When work is complete, tell the user which files changed and whether to restart.
+- Deployment: `frontend/build/` → server `html` dir; `backend/` → server `backend`
+  dir on Ubuntu 22.04 (DigitalOcean). Development is on Windows.

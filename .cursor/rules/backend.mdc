@@ -1,0 +1,19 @@
+---
+description: Backend (Express + MongoDB) conventions for the Agoge site
+globs: backend/**/*
+alwaysApply: false
+---
+
+# Backend Conventions
+
+- Express 5 + Mongoose 9, CommonJS modules. Entry point: `server.js`, port 5000.
+- Currently a SCAFFOLD: routes in `routes/` return 501, models exist but are
+  unused, and MongoDB only connects if `MONGO_URI` is set in `.env`.
+- Structure: `config/` (db connection), `models/` (Mongoose schemas),
+  `routes/` (Express routers mounted under `/api/*` in `server.js`).
+- Models: `Review` (has `approved` flag for moderation) and `ContactMessage`
+  (has `handled` flag). Both use timestamps and input length limits.
+- Environment via `dotenv`; template in `.env.example`. Never commit `.env`.
+- When implementing routes: validate/sanitize request bodies at the boundary,
+  return JSON errors, and keep public endpoints read-only for approved content.
+- Do NOT start the server (`node server.js` / `npm run dev`) — the user runs it.

@@ -1,0 +1,38 @@
+.camps {
+  position: relative;
+  overflow: hidden;
+  padding: 100px 4%;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(59, 42, 28, 0.4) 50%, rgba(0, 0, 0, 0.88) 100%),
+    var(--brown-dark);
+  border-top: 1px solid var(--bronze);
+}
+.camps-inner { position: relative; z-index: 1; max-width: 1150px; margin: 0 auto; }
+.camps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+
+.camp-card {
+  background: var(--near-black);
+  border: 1px solid var(--bronze);
+  border-radius: 8px;
+  padding: 2rem;
+  text-decoration: none; color: var(--bone);
+  transition: border-color 0.25s, transform 0.2s;
+  display: block;
+}
+.camp-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+.camp-date {
+  font-family: var(--font-display);
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 0.7rem;
+}
+.camp-name {
+  font-family: var(--font-display);
+  font-size: 1.35rem; font-weight: 800; text-transform: uppercase;
+  line-height: 1.1; margin-bottom: 0.5rem;
+}
+.camp-desc { font-size: 0.875rem; color: var(--gray); line-height: 1.5; }
+
+@media (max-width: 960px) {
+  .camps-grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,97 @@
+.pt {
+  position: relative;
+  overflow: hidden;
+  padding: 100px 4%;
+  background: var(--black);
+  border-top: 1px solid var(--bronze);
+}
+.pt-inner { position: relative; z-index: 1; max-width: 1150px; margin: 0 auto; }
+.pt-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 1.4rem; flex-wrap: wrap; gap: 1rem;
+}
+.pt-intro {
+  font-size: 0.95rem; color: var(--gray);
+  line-height: 1.7; max-width: 720px; margin-bottom: 3rem;
+}
+.pt-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.pt-card {
+  background: var(--brown);
+  border: 1px solid var(--bronze);
+  border-radius: 8px;
+  padding: 2.2rem 2rem;
+  position: relative;
+  transition: border-color 0.25s, transform 0.2s;
+}
+.pt-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+.pt-card.featured {
+  background: linear-gradient(150deg, var(--brown) 0%, var(--bronze) 100%);
+  border-color: var(--gold);
+}
+.pt-card.featured::before {
+  content: 'Most Popular';
+  position: absolute; top: 1.1rem; right: 1.1rem;
+  font-family: var(--font-display);
+  font-size: 0.62rem; font-weight: 800; letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bone);
+  background: var(--red);
+  padding: 0.3rem 0.6rem; border-radius: 3px;
+}
+.pt-card-tag {
+  font-family: var(--font-display);
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gray);
+  margin-bottom: 1.3rem;
+}
+.pt-card-price {
+  display: flex; align-items: baseline; gap: 0.55rem;
+  margin-bottom: 1rem;
+}
+.pt-card-amount {
+  font-family: var(--font-display);
+  font-size: 3.4rem; font-weight: 900; line-height: 1;
+  color: var(--bone);
+}
+.pt-card-unit {
+  font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--gray);
+}
+.pt-card-name {
+  font-family: var(--font-display);
+  font-size: 1.35rem; font-weight: 800; text-transform: uppercase;
+  line-height: 1.1; margin-bottom: 0.6rem;
+  color: var(--bone);
+}
+.pt-card-desc {
+  font-size: 0.875rem; color: var(--gray); line-height: 1.6;
+}
+.pt-notes {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+}
+.pt-note {
+  background: var(--brown);
+  border: 1px solid var(--bronze);
+  border-left: 3px solid var(--gold);
+  border-radius: 6px;
+  padding: 1.3rem 1.6rem;
+}
+.pt-note-label {
+  font-family: var(--font-display);
+  font-size: 0.72rem; font-weight: 800; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--bone);
+  margin-bottom: 0.4rem;
+}
+.pt-note-text {
+  font-size: 0.88rem; color: var(--gray); line-height: 1.6;
+}
+.pt-note-text a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+.pt-note-text a:hover { color: var(--bone); }
+
+@media (max-width: 960px) {
+  .pt-grid { grid-template-columns: 1fr; }
+  .pt-notes { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "agoge-backend",
+  "version": "1.0.0",
+  "description": "Express + MongoDB backend for Agoge Wrestling Academy",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1",
+    "mongoose": "^9.4.0"
+  }
+}

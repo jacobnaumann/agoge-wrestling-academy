@@ -1,0 +1,127 @@
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  position: relative; overflow: hidden;
+  padding: 100px 4% 80px;
+}
+
+/* Hero photo with a dark tint gradient on top for text legibility.
+   Swap the url() to use a different image from src/assets. */
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(150deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.25) 55%, rgba(0, 0, 0, 0.35) 100%),
+    url('../assets/hero-competition-wrestlers.png');
+  background-size: cover, cover;
+  background-position: center, center 30%;
+}
+
+/* Subtle texture field */
+.hero-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(227, 222, 212, 0.5) 1px, transparent 1px),
+    radial-gradient(circle, rgba(227, 222, 212, 0.25) 1px, transparent 1px);
+  background-size: 60px 60px, 30px 30px;
+  background-position: 0 0, 15px 15px;
+  opacity: 0.05;
+  mix-blend-mode: screen;
+}
+
+/* Left-side darkening for text legibility */
+.hero-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.55) 35%, rgba(0, 0, 0, 0.15) 65%, rgba(0, 0, 0, 0) 100%);
+}
+
+.hero-content { position: relative; z-index: 2; max-width: 720px; }
+
+.hero-eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gray);
+  margin-bottom: 1.4rem;
+  display: flex; align-items: center; gap: 0.8rem;
+  animation: fadeUp 0.5s ease 0.1s both;
+}
+.hero-eyebrow::before {
+  content: 'Λ';
+  font-size: 0.8rem; color: var(--gold);
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3.8rem, 9vw, 7rem);
+  font-weight: 900; line-height: 0.9;
+  text-transform: uppercase; letter-spacing: -0.01em;
+  margin-bottom: 1.6rem;
+  color: var(--bone);
+  animation: fadeUp 0.5s ease 0.2s both;
+}
+.hero h1 .line2 {
+  display: block;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--gold);
+}
+
+.hero-sub {
+  font-size: 1.05rem; font-weight: 300; line-height: 1.75;
+  color: var(--gray); max-width: 500px;
+  margin-bottom: 2.5rem;
+  animation: fadeUp 0.5s ease 0.35s both;
+}
+
+.hero-actions {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  animation: fadeUp 0.5s ease 0.45s both;
+}
+
+.ig-bar {
+  position: absolute; bottom: 40px; right: 4%; z-index: 2;
+  display: flex; align-items: center; gap: 0.6rem;
+  flex-wrap: wrap; justify-content: flex-end; max-width: 92%;
+}
+.ig-btn {
+  display: flex; align-items: center; gap: 0.6rem;
+  background: rgba(227, 222, 212, 0.08);
+  border: 1px solid var(--bronze);
+  border-radius: 30px;
+  padding: 0.5rem 1.1rem;
+  text-decoration: none; color: var(--bone);
+  font-size: 0.85rem; font-weight: 600;
+  transition: background 0.2s;
+}
+.ig-btn:hover { background: rgba(168, 129, 71, 0.2); }
+.ig-icon { font-size: 1.1rem; }
+
+@media (max-width: 960px) {
+  .hero {
+    min-height: 92vh;
+    padding: 90px 5% 110px;
+    /* Stack content and IG bar vertically; in row layout the static
+       .ig-bar becomes a side-by-side flex item and squeezes the text. */
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
+  }
+  /* Hero photos have their subject on the right side — keep that side
+     in frame when the viewport narrows and crops the image. */
+  .hero-bg { background-position: center, 75% 30%; }
+  .hero-content { max-width: 100%; }
+  .hero h1 { font-size: clamp(2.8rem, 13vw, 4.5rem); margin-bottom: 1.1rem; }
+  .hero-sub { font-size: 1rem; margin-bottom: 1.8rem; }
+  .hero-eyebrow { margin-bottom: 1rem; font-size: 0.75rem; }
+  .hero-actions { gap: 0.7rem; }
+  .ig-bar { position: static; margin-top: 1.6rem; justify-content: flex-start; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 85px 5% 90px; }
+  .hero h1 { font-size: clamp(2.5rem, 12vw, 3.6rem); }
+  .hero-sub { font-size: 0.95rem; line-height: 1.6; }
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .hero-actions .btn-primary,
+  .hero-actions .btn-outline { text-align: center; width: 100%; }
+}

@@ -1,0 +1,41 @@
+---
+description: Agoge brand colors, typography, and styling conventions
+globs: frontend/**/*.css,frontend/**/*.jsx
+alwaysApply: false
+---
+
+# Agoge Design System
+
+## Color palette (CSS variables in `frontend/src/index.css`)
+
+| Variable | Hex | Use |
+| --- | --- | --- |
+| `--black` | `#000000` | Main site background |
+| `--bone` | `#E3DED4` | Headlines, primary text |
+| `--gold` | `#A88147` | Primary brand: borders, buttons, accents |
+| `--bronze` | `#795E36` | Hover states, dividers, secondary accents |
+| `--red` | `#801C10` | Alerts, highlights, CTA accents (use sparingly) |
+| `--brown` | `#3B2A1C` | Cards, panels, subtle backgrounds |
+| `--gray` | `#B3ACA1` | Secondary text |
+
+Derived shades: `--brown-dark` (#241a11), `--near-black` (#0c0906).
+ALWAYS use the CSS variables, never hard-code hex values in component CSS.
+
+## Typography
+
+- Display/headings: `var(--font-display)` — Barlow Condensed (900 for titles, uppercase)
+- Body: `var(--font-body)` — Barlow (300/400 weights)
+- Loaded via Google Fonts in `frontend/index.html`
+
+## Brand motif
+
+The Greek letter Λ (lambda, Spartan shield symbol) in gold is the brand mark —
+used in section labels (`.section-label::before`), list bullets, nav, and footer.
+
+## Conventions
+
+- Each section component has a co-located `.css` file it imports.
+- Shared classes from `index.css`: `.btn-primary`, `.btn-outline`, `.section-label`,
+  `.section-title`, `.section-note`, `.texture-overlay`, `.form-group`, `.form-row`.
+- Sections: full-width, `padding: 100px 4%`, inner wrapper `max-width: 1150px`.
+- Responsive breakpoints: 960px (primary), 720px/480px where needed.

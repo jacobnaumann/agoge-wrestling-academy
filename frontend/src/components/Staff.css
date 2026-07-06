@@ -1,0 +1,81 @@
+.staff {
+  position: relative;
+  overflow: hidden;
+  padding: 100px 4%;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.84) 0%, rgba(59, 42, 28, 0.35) 50%, rgba(0, 0, 0, 0.9) 100%),
+    var(--brown-dark);
+  border-top: 1px solid var(--bronze);
+}
+.staff-inner { position: relative; z-index: 1; max-width: 1150px; margin: 0 auto; }
+.staff-header { margin-bottom: 3.5rem; }
+
+.staff-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;
+}
+
+.staff-card {
+  background: var(--near-black);
+  border: 1px solid var(--bronze);
+  border-radius: 10px;
+  padding: 2.5rem;
+  position: relative; overflow: hidden;
+}
+.staff-card.head-coach {
+  grid-column: span 2;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;
+}
+.staff-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; background: var(--gold); opacity: 0.4;
+  z-index: 2;
+}
+.staff-card.head-coach::before { opacity: 1; }
+
+.staff-role {
+  font-family: var(--font-display);
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 0.4rem;
+}
+.staff-name {
+  font-family: var(--font-display);
+  font-size: 2rem; font-weight: 900; text-transform: uppercase;
+  line-height: 1; margin-bottom: 0.2rem;
+  color: var(--bone);
+}
+.staff-contact {
+  font-size: 0.82rem; color: var(--gray);
+  margin-bottom: 1.5rem; margin-top: 0.3rem;
+}
+.staff-contact a { color: var(--gray); text-decoration: none; }
+.staff-contact a:hover { color: var(--bone); }
+
+.staff-accolades { list-style: none; }
+.staff-accolades li {
+  font-size: 0.875rem; color: var(--gray);
+  padding: 0.38rem 0;
+  border-bottom: 1px solid rgba(121, 94, 54, 0.35);
+  display: flex; align-items: flex-start; gap: 0.5rem;
+  line-height: 1.4;
+}
+.staff-accolades li:last-child { border-bottom: none; }
+.staff-accolades li::before {
+  content: 'Λ'; font-size: 0.55rem; color: var(--gold);
+  margin-top: 0.35rem; flex-shrink: 0;
+}
+
+.accolades-section-label {
+  font-family: var(--font-display);
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; color: rgba(179, 172, 161, 0.6);
+  margin-top: 1.2rem; margin-bottom: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(121, 94, 54, 0.4);
+}
+
+@media (max-width: 960px) {
+  .staff-grid { grid-template-columns: 1fr; }
+  .staff-card.head-coach { grid-column: span 1; grid-template-columns: 1fr; }
+}

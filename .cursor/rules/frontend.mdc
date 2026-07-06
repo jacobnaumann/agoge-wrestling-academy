@@ -1,0 +1,21 @@
+---
+description: Frontend (Vite + React) conventions for the Agoge site
+globs: frontend/**/*
+alwaysApply: false
+---
+
+# Frontend Conventions
+
+- Vite + React 19, plain JSX (no TypeScript). Functional components only.
+- `vite.config.js` sets `build.outDir: 'build'` — do not change; the deployment
+  flow uploads `frontend/build/` to the server html directory.
+- Dev server proxies `/api` to `http://localhost:5000` (Express backend).
+- ALL site copy/content lives in `src/data/siteContent.js`. Components should
+  render from that data — never hard-code business content (names, prices,
+  schedules, links) inside components.
+- One component per page section in `src/components/`, each importing its own
+  co-located CSS file. Page assembly happens in `App.jsx`.
+- Linting: `npm run lint` (oxlint).
+- Reviews currently persist to localStorage (`agoge-reviews` key) and the contact
+  form falls back to mailto. Both have TODOs to switch to `/api/reviews` and
+  `/api/contact` when the backend is wired up.
