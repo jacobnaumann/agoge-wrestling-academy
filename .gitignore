@@ -4,6 +4,9 @@ node_modules/
 # Environment
 .env
 
+# TLS certificates / private keys
+deploy/certs/
+
 # Build output
 frontend/build/
 frontend/dist/
