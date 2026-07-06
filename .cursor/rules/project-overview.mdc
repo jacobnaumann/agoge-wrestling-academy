@@ -24,7 +24,9 @@ Agoge branding and a black/gold/red Spartan color scheme. See the
   - `src/index.css` — theme variables, buttons, shared section styles, forms.
 - `backend/` — Express 5 + Mongoose scaffold (NOT wired to the frontend yet).
   Routes return 501; contact form uses mailto and reviews use localStorage until wired.
+- `deploy/` — `deploy.ps1` (build + upload script) and `nginx-agoge.conf` (server config).
 - `Beebe/` — reference source from the site the client wants replicated. Do not modify.
+  Excluded from git (root `.gitignore`) — local only.
 
 ## Current placeholder status
 
@@ -42,5 +44,25 @@ copy/keywords, sitemap, proper title/meta descriptions.
 
 - Do NOT run `npm run dev` / `node server.js` — the user runs these themselves.
 - When work is complete, tell the user which files changed and whether to restart.
-- Deployment: `frontend/build/` → server `html` dir; `backend/` → server `backend`
-  dir on Ubuntu 22.04 (DigitalOcean). Development is on Windows.
+- Development is on Windows; production is a DigitalOcean droplet (see below).
+
+## Git / GitHub
+
+Public repo: https://github.com/jacobnaumann/agoge-wrestling-academy (branch `main`).
+Root `.gitignore` excludes `Beebe/`, `node_modules/`, `.env`, and `frontend/build/`.
+
+## Production (deployed 2026-07-06)
+
+- Droplet: `agoge-web` (ID 582690044), 204.48.16.139, nyc1, 1GB/1vCPU ($6/mo),
+  Ubuntu 24.04, in the client's DO account (agogewrestlingacademyfl@gmail.com,
+  project "Agoge"). SSH as `root` with key `~/.ssh/id_ed25519` (jacob-agoge).
+- Stack: nginx serves `/var/www/html` (frontend build) and proxies `/api/` to
+  Express on port 5000; backend lives at `/root/backend`, runs under PM2 as
+  `agoge-api` (resurrects on reboot via systemd). UFW allows OpenSSH + Nginx Full.
+- nginx site config: `/etc/nginx/sites-available/agoge` (copy of
+  `deploy/nginx-agoge.conf`; default site removed).
+- To deploy: run `.\deploy\deploy.ps1` from the repo root (builds the frontend,
+  uploads via scp, fixes file perms — Windows scp lands 600/700 — restarts PM2).
+- `doctl` CLI is installed (winget) and authenticated against the client account.
+- No domain yet; no SSL until a domain is pointed at the droplet. MongoDB not
+  installed — plan is MongoDB Atlas free M0 tier when the backend is wired up.
