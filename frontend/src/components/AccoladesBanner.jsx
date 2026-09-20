@@ -1,7 +1,8 @@
-import { accolades } from '../data/siteContent'
+import { useContent } from '../data/ContentContext'
 import './AccoladesBanner.css'
 
 export default function AccoladesBanner() {
+  const { accolades } = useContent()
   return (
     <div className="accolades-banner">
       <div className="accolades-inner">

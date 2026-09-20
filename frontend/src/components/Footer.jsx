@@ -1,7 +1,8 @@
-import { site } from '../data/siteContent'
+import { useContent } from '../data/ContentContext'
 import './Footer.css'
 
 export default function Footer() {
+  const { site } = useContent()
   return (
     <footer className="footer">
       <div className="footer-inner">

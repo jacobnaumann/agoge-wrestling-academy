@@ -10,11 +10,24 @@ alwaysApply: false
 - `vite.config.js` sets `build.outDir: 'build'` — do not change; the deployment
   flow uploads `frontend/build/` to the server html directory.
 - Dev server proxies `/api` to `http://localhost:5000` (Express backend).
-- ALL site copy/content lives in `src/data/siteContent.js`. Components should
-  render from that data — never hard-code business content (names, prices,
-  schedules, links) inside components.
+- Site content is fetched from `/api/content` at runtime via `ContentProvider`
+  (`src/data/ContentContext.jsx`); components read it with `useContent()` —
+  never hard-code business content (names, prices, schedules, links) inside
+  components and never import content statically. `src/data/siteContent.js`
+  holds the bundled default content (fallback while loading / backend down)
+  plus `deriveContent()` (builds hero eyebrow and program registration links);
+  it must stay in the same shape as `backend/data/content.default.json`.
 - One component per page section in `src/components/`, each importing its own
   co-located CSS file. Page assembly happens in `App.jsx`.
+- `/admin` renders `src/admin/AdminApp.jsx` (path branch in `main.jsx`, no
+  router): password login → JWT in sessionStorage → per-section forms →
+  `PUT /api/content`. Reusable form fields live in `src/admin/fields.jsx`,
+  section editors in `src/admin/sections/`, API calls in `src/admin/api.js`.
+- Staff coach objects may include an optional `image` URL. The Staff admin
+  editor uploads portraits immediately through `/api/admin/coach-images`, then
+  the normal content Save persists the returned URL. Public staff cards use the
+  portrait as a full-card background beneath a dark readability overlay and
+  show a branded watermark when no image exists or an image cannot load.
 - Linting: `npm run lint` (oxlint).
 - Reviews currently persist to localStorage (`agoge-reviews` key) and the contact
   form falls back to mailto. Both have TODOs to switch to `/api/reviews` and

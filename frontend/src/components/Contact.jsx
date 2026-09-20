@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { site, programOptions } from '../data/siteContent'
+import { useContent } from '../data/ContentContext'
 import './Contact.css'
 
 export default function Contact() {
+  const { site, programOptions } = useContent()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [program, setProgram] = useState('')

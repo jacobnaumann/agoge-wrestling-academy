@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { site } from '../data/siteContent'
+import { useContent } from '../data/ContentContext'
 import './Navbar.css'
 
 const links = [
@@ -14,6 +14,7 @@ const links = [
 ]
 
 export default function Navbar() {
+  const { site } = useContent()
   const [open, setOpen] = useState(false)
 
   return (

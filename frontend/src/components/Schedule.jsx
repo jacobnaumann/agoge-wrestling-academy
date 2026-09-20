@@ -1,7 +1,8 @@
-import { schedule, scheduleTiers } from '../data/siteContent'
+import { useContent } from '../data/ContentContext'
 import './Schedule.css'
 
 export default function Schedule() {
+  const { schedule, scheduleTiers } = useContent()
   return (
     <section className="schedule texture-overlay" id="schedule">
       <div className="schedule-inner">

@@ -29,7 +29,9 @@ if (-not $BackendOnly) {
 if (-not $FrontendOnly) {
     Write-Host '== Uploading backend =='
     Push-Location $Root
-    tar -czf "$env:TEMP\agoge-backend.tgz" --exclude=node_modules --exclude=.env backend
+    # Live content and owner-uploaded images on the droplet must survive deploys.
+    # Defaults still ship as content.default.json for first-run seeding.
+    tar -czf "$env:TEMP\agoge-backend.tgz" --exclude=node_modules --exclude=.env --exclude=backend/data/content.json --exclude=backend/data/uploads backend
     Pop-Location
     scp "$env:TEMP\agoge-backend.tgz" "${Server}:/tmp/backend.tgz"
     Remove-Item "$env:TEMP\agoge-backend.tgz"

@@ -1,7 +1,8 @@
-import { camps } from '../data/siteContent'
+import { useContent } from '../data/ContentContext'
 import './Camps.css'
 
 export default function Camps() {
+  const { camps } = useContent()
   return (
     <section className="camps texture-overlay" id="camps">
       <div className="camps-inner">

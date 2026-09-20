@@ -1,7 +1,8 @@
-import { hero, site } from '../data/siteContent'
+import { useContent } from '../data/ContentContext'
 import './Hero.css'
 
 export default function Hero() {
+  const { hero, site } = useContent()
   return (
     <section className="hero" id="home">
       <div className="hero-bg" />

@@ -1,7 +1,8 @@
-import { competitions } from '../data/siteContent'
+import { useContent } from '../data/ContentContext'
 import './Competitions.css'
 
 export default function Competitions() {
+  const { competitions } = useContent()
   return (
     <section className="competitions texture-overlay" id="competitions">
       <div className="competitions-inner">

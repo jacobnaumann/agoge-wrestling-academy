@@ -7,10 +7,23 @@ alwaysApply: false
 # Backend Conventions
 
 - Express 5 + Mongoose 9, CommonJS modules. Entry point: `server.js`, port 5000.
-- Currently a SCAFFOLD: routes in `routes/` return 501, models exist but are
-  unused, and MongoDB only connects if `MONGO_URI` is set in `.env`.
+- Contact/review routes still return 501 (scaffold); MongoDB only connects if
+  `MONGO_URI` is set in `.env`. The content/admin API is LIVE and uses no DB.
 - Structure: `config/` (db connection), `models/` (Mongoose schemas),
-  `routes/` (Express routers mounted under `/api/*` in `server.js`).
+  `routes/` (Express routers mounted under `/api/*` in `server.js`),
+  `lib/` (contentStore file persistence), `middleware/` (JWT auth),
+  `data/` (content JSON), `scripts/` (hash-password.js).
+- Content API: `GET /api/content` (public) reads `data/content.json` (seeded
+  from `data/content.default.json` on first run; gitignored, survives deploys);
+  `PUT /api/content` (requires `requireAdmin` JWT middleware) validates required
+  top-level keys + 200KB cap and writes atomically (tmp file + rename).
+- Admin auth: `POST /api/admin/login` bcrypt-compares against
+  `ADMIN_PASSWORD_HASH`, signs a 12h JWT with `JWT_SECRET` (both required in
+  `.env`, else 503). In-memory rate limit: 5 failed attempts / 15 min / IP.
+- Coach portraits: authenticated `POST /api/admin/coach-images` accepts one
+  JPG/PNG/WebP up to 5MB, normalizes it to a 640x800 WebP with Sharp, and stores
+  it under `data/uploads/coaches/`. Files are served read-only from
+  `/api/uploads/`; the runtime upload directory is gitignored and survives deploys.
 - Models: `Review` (has `approved` flag for moderation) and `ContactMessage`
   (has `handled` flag). Both use timestamps and input length limits.
 - Environment via `dotenv`; template in `.env.example`. Never commit `.env`.

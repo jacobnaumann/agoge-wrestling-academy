@@ -1,7 +1,8 @@
-import { personalTraining } from '../data/siteContent'
+import { useContent } from '../data/ContentContext'
 import './PersonalTraining.css'
 
 export default function PersonalTraining() {
+  const { personalTraining } = useContent()
   return (
     <section className="pt texture-overlay" id="personal-training">
       <div className="pt-inner">

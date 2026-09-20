@@ -1,4 +1,4 @@
-import { programs } from '../data/siteContent'
+import { useContent } from '../data/ContentContext'
 import './Programs.css'
 
 function ProgramCard({ program }) {
@@ -18,6 +18,7 @@ function ProgramCard({ program }) {
 }
 
 export default function Programs() {
+  const { programs } = useContent()
   return (
     <section className="programs texture-overlay" id="programs">
       <div className="programs-header">

@@ -19,20 +19,48 @@ Agoge branding and a black/gold/red Spartan color scheme. See the
 ## Structure
 
 - `frontend/` — Vite + React 19 (JSX) single-page site. Builds to `frontend/build/`.
-  - `src/data/siteContent.js` — ALL site copy/content lives here (currently placeholders).
+  - `src/data/siteContent.js` — default content object + `deriveContent()` helper.
+    Live content is fetched from `/api/content` at runtime (see below).
+  - `src/data/ContentContext.jsx` — `ContentProvider` fetches `/api/content` and
+    merges over the bundled defaults; components read via `useContent()`.
   - `src/components/` — one component per page section, each with a co-located `.css` file.
+  - `src/admin/` — the `/admin` content editor (login + per-section forms).
   - `src/index.css` — theme variables, buttons, shared section styles, forms.
-- `backend/` — Express 5 + Mongoose scaffold (NOT wired to the frontend yet).
-  Routes return 501; contact form uses mailto and reviews use localStorage until wired.
+- `backend/` — Express 5. Content API is live (no DB): `GET /api/content` (public),
+  `PUT /api/content` (JWT-protected), `POST /api/admin/login`. Content persists to
+  `backend/data/content.json` (gitignored; seeded from `content.default.json`).
+  Contact/review routes still return 501; contact form uses mailto and reviews
+  use localStorage until wired.
 - `deploy/` — `deploy.ps1` (build + upload script) and `nginx-agoge.conf` (server config).
 - `Beebe/` — reference source from the site the client wants replicated. Do not modify.
   Excluded from git (root `.gitignore`) — local only.
 
+## Admin content editor (/admin)
+
+Navigating to `/admin` renders `frontend/src/admin/AdminApp.jsx` (branch in
+`main.jsx`, no router). Login is a single admin password: bcrypt hash in the
+backend `.env` (`ADMIN_PASSWORD_HASH`, generate with
+`node backend/scripts/hash-password.js "pw"`) plus `JWT_SECRET`; login returns a
+12h JWT kept in sessionStorage. Saves replace the whole content JSON (validated
+top-level keys, 200KB cap, atomic write). Editing content requires NO rebuild —
+the public site fetches it at runtime. Both env vars must be set on the droplet
+or admin login returns 503.
+
+Coach portraits are optional `image` fields on staff objects. The Staff editor
+uploads JPG/PNG/WebP files (5MB max) through `POST /api/admin/coach-images`;
+the backend normalizes them to 640x800 WebP files in
+`backend/data/uploads/coaches/` and serves them from `/api/uploads/`. Runtime
+uploads are gitignored and excluded from deploy archives so production images
+survive deployments. Staff cards display these portraits as full-card
+backgrounds beneath a dark overlay, with a Lambda watermark fallback.
+
 ## Current placeholder status
 
 Business content (address, phone, email, coach names, stats, schedule,
-registration URLs, Instagram, logo) is ALL placeholder in `siteContent.js`.
-The logo is a temporary Λ text mark until the client provides a real one.
+registration URLs, Instagram, logo) is ALL placeholder — defaults live in
+`backend/data/content.default.json` and `frontend/src/data/siteContent.js`
+(keep the two in the same shape). The logo is a temporary Λ text mark until
+the client provides a real one.
 
 ## Planned (pre-launch)
 
@@ -49,7 +77,8 @@ copy/keywords, sitemap, proper title/meta descriptions.
 ## Git / GitHub
 
 Public repo: https://github.com/jacobnaumann/agoge-wrestling-academy (branch `main`).
-Root `.gitignore` excludes `Beebe/`, `node_modules/`, `.env`, and `frontend/build/`.
+Root `.gitignore` excludes `Beebe/`, `node_modules/`, `.env`, `frontend/build/`,
+and `backend/data/content.json` (live admin-edited content).
 
 ## Production (deployed 2026-07-06)
 
@@ -68,6 +97,9 @@ Root `.gitignore` excludes `Beebe/`, `node_modules/`, `.env`, and `frontend/buil
   SSL mode Full (strict); Always Use HTTPS on. Origin cert valid 15 years.
 - To deploy: run `.\deploy\deploy.ps1` from the repo root (builds the frontend,
   uploads via scp, fixes file perms — Windows scp lands 600/700 — restarts PM2).
+  The backend tar EXCLUDES `backend/data/content.json` so admin edits on the
+ droplet are never overwritten by a deploy; it also excludes
+ `backend/data/uploads/` so uploaded coach portraits are preserved.
 - `doctl` CLI is installed (winget) and authenticated against the client account.
 - MongoDB not installed — plan is MongoDB Atlas free M0 tier when the backend
   is wired up.

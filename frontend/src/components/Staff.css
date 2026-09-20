@@ -19,19 +19,72 @@
   border: 1px solid var(--bronze);
   border-radius: 10px;
   padding: 2.5rem;
-  position: relative; overflow: hidden;
+  position: relative;
+  min-height: 360px;
+  overflow: hidden;
+  isolation: isolate;
 }
 .staff-card.head-coach {
   grid-column: span 2;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;
+  min-height: 440px;
 }
 .staff-card::before {
   content: '';
   position: absolute; top: 0; left: 0; right: 0;
   height: 3px; background: var(--gold); opacity: 0.4;
-  z-index: 2;
+  z-index: 3;
 }
 .staff-card.head-coach::before { opacity: 1; }
+.staff-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(12, 9, 6, 0.86) 0%, rgba(12, 9, 6, 0.6) 48%, rgba(12, 9, 6, 0.82) 100%);
+}
+
+.staff-card-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center 22%;
+  opacity: 0.9;
+  filter: saturate(0.85) contrast(1.03);
+}
+
+.staff-card-watermark {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: 9rem;
+  font-weight: 900;
+  opacity: 0.08;
+}
+
+.staff-card-content {
+  position: relative;
+  z-index: 2;
+}
+
+.staff-identity {
+  min-width: 0;
+}
+
+.staff-accolade-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem;
+  margin-top: 1rem;
+}
 
 .staff-role {
   font-family: var(--font-display);
@@ -44,15 +97,19 @@
   font-size: 2rem; font-weight: 900; text-transform: uppercase;
   line-height: 1; margin-bottom: 0.2rem;
   color: var(--bone);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
 }
 .staff-contact {
   font-size: 0.82rem; color: var(--gray);
-  margin-bottom: 1.5rem; margin-top: 0.3rem;
+  margin-top: 0.5rem;
+  line-height: 1.6;
 }
-.staff-contact a { color: var(--gray); text-decoration: none; }
+.staff-contact a { color: var(--gray); text-decoration: none; overflow-wrap: anywhere; }
 .staff-contact a:hover { color: var(--bone); }
+.staff-contact-divider { margin: 0 0.55rem; }
 
-.staff-accolades { list-style: none; }
+.staff-accolades { list-style: none; margin-top: 1.5rem; }
+.staff-accolade-column .staff-accolades { margin-top: 0; }
 .staff-accolades li {
   font-size: 0.875rem; color: var(--gray);
   padding: 0.38rem 0;
@@ -77,5 +134,21 @@
 
 @media (max-width: 960px) {
   .staff-grid { grid-template-columns: 1fr; }
-  .staff-card.head-coach { grid-column: span 1; grid-template-columns: 1fr; }
+  .staff-card.head-coach { grid-column: span 1; }
+}
+
+@media (max-width: 720px) {
+  .staff { padding: 72px 5%; }
+  .staff-card { padding: 1.75rem; }
+  .staff-card,
+  .staff-card.head-coach { min-height: 400px; }
+  .staff-accolade-columns { grid-template-columns: 1fr; gap: 0; }
+  .staff-name { font-size: 1.7rem; }
+}
+
+@media (max-width: 480px) {
+  .staff-card { padding: 1.35rem; }
+  .staff-name { font-size: 1.45rem; }
+  .staff-contact-divider { display: block; height: 0; margin: 0; overflow: hidden; }
+  .staff-card-image { object-position: center 18%; }
 }

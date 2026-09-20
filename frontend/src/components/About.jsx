@@ -1,7 +1,8 @@
-import { about, site } from '../data/siteContent'
+import { useContent } from '../data/ContentContext'
 import './About.css'
 
 export default function About() {
+  const { about, site } = useContent()
   return (
     <section className="about texture-overlay" id="about">
       <div className="about-inner">

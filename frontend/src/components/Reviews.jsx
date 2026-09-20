@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { seedReviews, reviewProgramOptions, site } from '../data/siteContent'
+import { useContent } from '../data/ContentContext'
 import './Reviews.css'
 
 const STORAGE_KEY = 'agoge-reviews'
@@ -38,6 +38,7 @@ function StarSelector({ value, onChange }) {
 }
 
 export default function Reviews() {
+  const { seedReviews, reviewProgramOptions, site } = useContent()
   const [stored, setStored] = useState([])
   const [name, setName] = useState('')
   const [program, setProgram] = useState('')
