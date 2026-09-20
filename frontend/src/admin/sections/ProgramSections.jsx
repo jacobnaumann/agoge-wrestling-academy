@@ -1,6 +1,10 @@
 // Editors for: Programs, Schedule (grid + legend + tiers).
-import { uploadProgramImage } from '../api.js'
+import { uploadLegendImage, uploadProgramImage } from '../api.js'
 import { Field, CheckboxField, ImageUploadField, ListEditor, SelectField } from '../fields.jsx'
+import {
+  DEFAULT_LEGEND_IMAGE_VISIBILITY,
+  getLegendOverlayStyle,
+} from '../../utils/legendCard.js'
 import {
   DEFAULT_PROGRAM_IMAGE_VISIBILITY,
   getProgramOverlayStyle,
@@ -135,7 +139,47 @@ export function ProgramsEditor({ data, onChange, onUnauthorized }) {
   )
 }
 
-export function ScheduleEditor({ data, onChange, tiers, onTiersChange }) {
+function LegendVisibilityField({ legend, tier, onChange }) {
+  const visibility = legend.imageVisibility ?? DEFAULT_LEGEND_IMAGE_VISIBILITY
+
+  return (
+    <div className="adm-visibility-field">
+      <div
+        className="adm-legend-preview"
+        style={{ ...getLegendOverlayStyle(visibility), borderTopColor: tier?.color }}
+      >
+        {legend.image && (
+          <img src={legend.image} alt="" onError={(event) => event.currentTarget.remove()} />
+        )}
+        <div className="adm-legend-preview-copy">
+          <strong>{tier?.name || 'Tier name'}</strong>
+          <span>{legend.meta || 'Schedule preview'}</span>
+          <small>{legend.drop || 'Drop-in text'}</small>
+        </div>
+      </div>
+      <label className="adm-visibility-control">
+        <span className="adm-field-label">Image visibility: {visibility}%</span>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          step="5"
+          value={visibility}
+          onChange={(event) => onChange(Number(event.target.value))}
+        />
+        <span className="adm-visibility-scale">
+          <span>Darker</span>
+          <span>Brighter</span>
+        </span>
+        <span className="adm-field-hint">
+          Adjusts the dark overlay for this legend card without changing its text.
+        </span>
+      </label>
+    </div>
+  )
+}
+
+export function ScheduleEditor({ data, onChange, tiers, onTiersChange, onUnauthorized }) {
   const tierOptions = Object.entries(tiers).map(([value, t]) => ({ value, label: t.name }))
   const firstTier = tierOptions[0]?.value ?? ''
 
@@ -199,26 +243,49 @@ export function ScheduleEditor({ data, onChange, tiers, onTiersChange }) {
         label="Legend cards (below the grid)"
         items={data.legend}
         onChange={(v) => onChange({ ...data, legend: v })}
-        blankItem={{ tier: firstTier, meta: '', drop: '' }}
+        blankItem={{
+          tier: firstTier,
+          image: '',
+          imageVisibility: DEFAULT_LEGEND_IMAGE_VISIBILITY,
+          meta: '',
+          drop: '',
+        }}
         itemTitle={(l) => tiers[l.tier]?.name || l.tier}
         addLabel="Add legend card"
         renderItem={(item, update) => (
-          <div className="adm-grid-3">
-            <SelectField
-              label="Tier"
-              value={item.tier}
-              onChange={(v) => update({ ...item, tier: v })}
-              options={tierOptions}
+          <>
+            <ImageUploadField
+              label="Background image"
+              value={item.image}
+              onChange={(v) => update({ ...item, image: v })}
+              onUpload={uploadLegendImage}
+              onUnauthorized={onUnauthorized}
+              alt={`${tiers[item.tier]?.name || 'Legend card'} background preview`}
+              previewVariant="landscape"
+              hint="JPG, PNG, or WebP up to 5MB. Use a landscape action photo."
             />
-            <Field
-              label="Days & times"
-              value={item.meta}
-              onChange={(v) => update({ ...item, meta: v })}
-              textarea
-              hint="Line breaks are kept on the site."
+            <LegendVisibilityField
+              legend={item}
+              tier={tiers[item.tier]}
+              onChange={(v) => update({ ...item, imageVisibility: v })}
             />
-            <Field label="Drop-in text" value={item.drop} onChange={(v) => update({ ...item, drop: v })} />
-          </div>
+            <div className="adm-grid-3">
+              <SelectField
+                label="Tier"
+                value={item.tier}
+                onChange={(v) => update({ ...item, tier: v })}
+                options={tierOptions}
+              />
+              <Field
+                label="Days & times"
+                value={item.meta}
+                onChange={(v) => update({ ...item, meta: v })}
+                textarea
+                hint="Line breaks are kept on the site."
+              />
+              <Field label="Drop-in text" value={item.drop} onChange={(v) => update({ ...item, drop: v })} />
+            </div>
+          </>
         )}
       />
 

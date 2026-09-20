@@ -1,4 +1,5 @@
 import { useContent } from '../data/ContentContext'
+import { getLegendOverlayStyle } from '../utils/legendCard'
 import './Schedule.css'
 
 export default function Schedule() {
@@ -39,20 +40,36 @@ export default function Schedule() {
         <div className="schedule-legend">
           {schedule.legend.map((l) => (
             <div
-              className="legend-card"
-              style={{ borderTopColor: scheduleTiers[l.tier].color }}
+              className={`legend-card${l.image ? ' has-image' : ''}`}
+              style={{
+                ...getLegendOverlayStyle(l.imageVisibility),
+                borderTopColor: scheduleTiers[l.tier].color,
+              }}
               key={l.tier}
             >
-              <div className="legend-name">{scheduleTiers[l.tier].name}</div>
-              <div className="legend-meta">
-                {l.meta.split('\n').map((line, i) => (
-                  <span key={i}>
-                    {i > 0 && <br />}
-                    {line}
-                  </span>
-                ))}
+              {l.image && (
+                <img
+                  className="legend-card-image"
+                  src={l.image}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  onError={(event) => event.currentTarget.remove()}
+                />
+              )}
+              <span className="legend-card-overlay" aria-hidden="true" />
+              <div className="legend-card-content">
+                <div className="legend-name">{scheduleTiers[l.tier].name}</div>
+                <div className="legend-meta">
+                  {l.meta.split('\n').map((line, i) => (
+                    <span key={i}>
+                      {i > 0 && <br />}
+                      {line}
+                    </span>
+                  ))}
+                </div>
+                <span className="legend-drop">{l.drop}</span>
               </div>
-              <span className="legend-drop">{l.drop}</span>
             </div>
           ))}
         </div>

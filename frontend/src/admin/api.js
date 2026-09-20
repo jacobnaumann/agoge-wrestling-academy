@@ -86,3 +86,7 @@ export function uploadProgramImage(file) {
 export function uploadHeroImage(file) {
   return uploadAdminImage('/api/admin/hero-images', file)
 }
+
+export function uploadLegendImage(file) {
+  return uploadAdminImage('/api/admin/legend-images', file)
+}

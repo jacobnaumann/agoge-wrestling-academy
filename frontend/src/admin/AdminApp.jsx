@@ -201,6 +201,7 @@ export default function AdminApp() {
             onChange={(v) => update('schedule', v)}
             tiers={content.scheduleTiers}
             onTiersChange={(v) => update('scheduleTiers', v)}
+            onUnauthorized={expireSession}
           />
         )
       case 'competitions':

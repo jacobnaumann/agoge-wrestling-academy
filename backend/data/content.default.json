@@ -167,11 +167,11 @@
       { "day": "Saturday", "classes": [], "rest": true }
     ],
     "legend": [
-      { "tier": "youth", "meta": "Tue & Thu · 4:00 – 5:00 PM", "drop": "Drop-in $20" },
-      { "tier": "homeschool", "meta": "Mon & Wed · 10:00 – 11:00 AM", "drop": "Drop-in $20" },
-      { "tier": "hoplites", "meta": "Mon, Tue & Thu · 5:00 – 6:30 PM", "drop": "Drop-in $20" },
-      { "tier": "elite", "meta": "Mon – Thu · 6:30 – 8:00 PM\nSun · 4:00 – 6:00 PM", "drop": "Members only" },
-      { "tier": "openmat", "meta": "Fridays · 6:00 – 7:30 PM", "drop": "Drop-in $20" }
+      { "tier": "youth", "image": "", "imageVisibility": 50, "meta": "Tue & Thu · 4:00 – 5:00 PM", "drop": "Drop-in $20" },
+      { "tier": "homeschool", "image": "", "imageVisibility": 50, "meta": "Mon & Wed · 10:00 – 11:00 AM", "drop": "Drop-in $20" },
+      { "tier": "hoplites", "image": "", "imageVisibility": 50, "meta": "Mon, Tue & Thu · 5:00 – 6:30 PM", "drop": "Drop-in $20" },
+      { "tier": "elite", "image": "", "imageVisibility": 50, "meta": "Mon – Thu · 6:30 – 8:00 PM\nSun · 4:00 – 6:00 PM", "drop": "Members only" },
+      { "tier": "openmat", "image": "", "imageVisibility": 50, "meta": "Fridays · 6:00 – 7:30 PM", "drop": "Drop-in $20" }
     ],
     "note": "Schedule subject to change around holidays and tournament weekends. Contact us to confirm before your first drop-in."
   },

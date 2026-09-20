@@ -74,6 +74,41 @@
   border-top: 3px solid var(--gold);
   border-radius: 6px;
   padding: 1.2rem 1.1rem;
+  position: relative;
+  min-height: 160px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.legend-card-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.legend-card-overlay {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(12, 9, 6, var(--legend-overlay-top, 0.77)) 0%,
+    rgba(12, 9, 6, var(--legend-overlay-middle, 0.69)) 50%,
+    rgba(12, 9, 6, var(--legend-overlay-bottom, 0.81)) 100%
+  );
+}
+.legend-card.has-image .legend-card-overlay { display: block; }
+.legend-card-content {
+  position: relative;
+  z-index: 2;
+}
+.legend-card.has-image .legend-name,
+.legend-card.has-image .legend-meta,
+.legend-card.has-image .legend-drop {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
 }
 .legend-name {
   font-family: var(--font-display);

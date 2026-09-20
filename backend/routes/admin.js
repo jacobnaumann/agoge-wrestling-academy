@@ -20,6 +20,11 @@ const heroImageHandlers = createImageUploadHandlers({
   width: 1920,
   height: 1080,
 })
+const legendImageHandlers = createImageUploadHandlers({
+  subdirectory: 'legend',
+  width: 800,
+  height: 600,
+})
 
 // In-memory login rate limit: max 5 failed attempts per IP per 15 minutes.
 // No DB, so this resets on restart — acceptable for a single-admin site.
@@ -75,5 +80,6 @@ router.post('/login', async (req, res) => {
 router.post('/coach-images', requireAdmin, ...coachImageHandlers)
 router.post('/program-images', requireAdmin, ...programImageHandlers)
 router.post('/hero-images', requireAdmin, ...heroImageHandlers)
+router.post('/legend-images', requireAdmin, ...legendImageHandlers)
 
 module.exports = router

@@ -69,6 +69,11 @@ The main hero supports a custom wide background uploaded through
 `backend/data/uploads/hero/`. Its admin editor includes an `imageVisibility`
 slider and live preview; removing the custom image restores the bundled hero.
 
+Schedule legend cards support independent backgrounds uploaded through
+`POST /api/admin/legend-images`, normalized to 800x600 WebP files under
+`backend/data/uploads/legend/`. Each legend item has an `imageVisibility`
+slider and live preview while retaining its tier-colored top border.
+
 Footer navigation is editable from a dedicated `/admin` Footer section.
 `footer.groups` stores reorderable group headings and `{ label, href }` links;
 older live content without this optional section falls back to bundled defaults.

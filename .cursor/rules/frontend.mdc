@@ -44,6 +44,10 @@ alwaysApply: false
   and provides a live tint preview. The public hero retains its fixed
   left-side readability gradient and uses the bundled wrestling image whenever
   no custom image is configured.
+- Schedule legend items may include `image` and `imageVisibility` (0–100,
+  default 50). The Schedule admin editor uploads landscape photos through
+  `/api/admin/legend-images` with per-card live previews. Public legend cards
+  retain their tier-colored top border and near-black fallback.
 - Footer navigation is content-driven through `footer.groups`, where each group
   has a title and reorderable `{ label, href }` links. The `/admin` Footer
   section manages groups and links; legacy live content without `footer` uses
