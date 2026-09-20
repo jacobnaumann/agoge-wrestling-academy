@@ -23,7 +23,35 @@ export const defaultContent = {
     registrationBaseUrl: 'https://example.com/register',
   },
 
+  footer: {
+    groups: [
+      {
+        title: 'Programs',
+        links: [
+          { label: 'Spartans Youth', href: '#programs' },
+          { label: 'Hoplites', href: '#programs' },
+          { label: 'Elite', href: '#programs' },
+          { label: 'Homeschool', href: '#programs' },
+          { label: 'Personal Training', href: '#personal-training' },
+        ],
+      },
+      {
+        title: 'Academy',
+        links: [
+          { label: 'Staff', href: '#staff' },
+          { label: 'Schedule', href: '#schedule' },
+          { label: 'Competitions', href: '#competitions' },
+          { label: 'Camps', href: '#camps' },
+          { label: 'Reviews', href: '#reviews' },
+          { label: 'Contact', href: '#contact' },
+        ],
+      },
+    ],
+  },
+
   hero: {
+    image: '',
+    imageVisibility: 50,
     eyebrowTagline: 'Forged Through Discipline',
     titleLine1: 'Forge Champions',
     titleLine2: 'On & Off The Mat',
@@ -381,6 +409,7 @@ export const defaultContent = {
 // values (e.g. registration links are built from registrationBaseUrl + slug).
 export function deriveContent(raw) {
   const content = structuredClone(raw)
+  content.footer ??= structuredClone(defaultContent.footer)
   const { site, hero, programs } = content
 
   hero.eyebrow = `${site.address.line1.split(',')[0]} · Est. ${site.established} · ${hero.eyebrowTagline}`

@@ -64,6 +64,15 @@ Program cards support optional wide background photos uploaded through
 `imageVisibility` slider with a live admin preview; cards without images keep
 the standard brown background.
 
+The main hero supports a custom wide background uploaded through
+`POST /api/admin/hero-images`, normalized to a 1920x1080 WebP under
+`backend/data/uploads/hero/`. Its admin editor includes an `imageVisibility`
+slider and live preview; removing the custom image restores the bundled hero.
+
+Footer navigation is editable from a dedicated `/admin` Footer section.
+`footer.groups` stores reorderable group headings and `{ label, href }` links;
+older live content without this optional section falls back to bundled defaults.
+
 ## Current placeholder status
 
 Business content (address, phone, email, coach names, stats, schedule,

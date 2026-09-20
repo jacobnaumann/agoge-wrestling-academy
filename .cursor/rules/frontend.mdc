@@ -39,6 +39,15 @@ alwaysApply: false
   `/api/admin/program-images` and provides a per-program live visibility
   preview. Public program cards render the photo beneath a dark overlay; cards
   without images retain the standard brown background.
+- Hero content may include `image` and `imageVisibility` (0–100, default 50).
+  The Hero admin editor uploads wide photos through `/api/admin/hero-images`
+  and provides a live tint preview. The public hero retains its fixed
+  left-side readability gradient and uses the bundled wrestling image whenever
+  no custom image is configured.
+- Footer navigation is content-driven through `footer.groups`, where each group
+  has a title and reorderable `{ label, href }` links. The `/admin` Footer
+  section manages groups and links; legacy live content without `footer` uses
+  the bundled defaults until footer changes are saved.
 - Linting: `npm run lint` (oxlint).
 - Reviews currently persist to localStorage (`agoge-reviews` key) and the contact
   form falls back to mailto. Both have TODOs to switch to `/api/reviews` and

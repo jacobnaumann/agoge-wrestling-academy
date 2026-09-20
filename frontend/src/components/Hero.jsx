@@ -1,11 +1,20 @@
+import defaultHeroImage from '../assets/hero-competition-wrestlers.png'
 import { useContent } from '../data/ContentContext'
+import { getHeroOverlayStyle } from '../utils/heroBackground'
 import './Hero.css'
 
 export default function Hero() {
   const { hero, site } = useContent()
+  const backgroundImage = hero.image || defaultHeroImage
   return (
     <section className="hero" id="home">
-      <div className="hero-bg" />
+      <div
+        className="hero-bg"
+        style={{
+          ...getHeroOverlayStyle(hero.imageVisibility),
+          backgroundImage: `url(${JSON.stringify(backgroundImage)})`,
+        }}
+      />
       <div className="hero-content">
         <div className="hero-eyebrow">{hero.eyebrow}</div>
         <h1>

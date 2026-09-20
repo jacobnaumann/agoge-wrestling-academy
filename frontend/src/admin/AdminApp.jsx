@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { defaultContent } from '../data/siteContent.js'
 import { login, fetchContent, saveContent, getToken, setToken, clearToken } from './api.js'
 import {
   SiteInfoEditor,
@@ -14,6 +15,7 @@ import {
   CampsEditor,
 } from './sections/PeopleSections.jsx'
 import { SeedReviewsEditor, FormOptionsEditor } from './sections/MiscSections.jsx'
+import FooterEditor from './sections/FooterSection.jsx'
 import './AdminApp.css'
 
 const SECTIONS = [
@@ -28,6 +30,7 @@ const SECTIONS = [
   { id: 'personalTraining', label: 'Personal Training' },
   { id: 'camps', label: 'Camps' },
   { id: 'seedReviews', label: 'Reviews' },
+  { id: 'footer', label: 'Footer' },
   { id: 'formOptions', label: 'Form Options' },
 ]
 
@@ -171,7 +174,14 @@ export default function AdminApp() {
       case 'site':
         return <SiteInfoEditor data={content.site} onChange={(v) => update('site', v)} />
       case 'hero':
-        return <HeroEditor data={content.hero} site={content.site} onChange={(v) => update('hero', v)} />
+        return (
+          <HeroEditor
+            data={content.hero}
+            site={content.site}
+            onChange={(v) => update('hero', v)}
+            onUnauthorized={expireSession}
+          />
+        )
       case 'accolades':
         return <AccoladesEditor data={content.accolades} onChange={(v) => update('accolades', v)} />
       case 'about':
@@ -214,6 +224,13 @@ export default function AdminApp() {
         return <CampsEditor data={content.camps} onChange={(v) => update('camps', v)} />
       case 'seedReviews':
         return <SeedReviewsEditor data={content.seedReviews} onChange={(v) => update('seedReviews', v)} />
+      case 'footer':
+        return (
+          <FooterEditor
+            data={content.footer ?? defaultContent.footer}
+            onChange={(v) => update('footer', v)}
+          />
+        )
       case 'formOptions':
         return (
           <FormOptionsEditor

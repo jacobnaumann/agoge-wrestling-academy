@@ -1,5 +1,11 @@
 // Editors for: Site Info, Hero, Accolades, About.
-import { Field, ListEditor, StringListEditor } from '../fields.jsx'
+import defaultHeroImage from '../../assets/hero-competition-wrestlers.png'
+import { uploadHeroImage } from '../api.js'
+import { Field, ImageUploadField, ListEditor, StringListEditor } from '../fields.jsx'
+import {
+  DEFAULT_HERO_IMAGE_VISIBILITY,
+  getHeroOverlayStyle,
+} from '../../utils/heroBackground.js'
 
 export function SiteInfoEditor({ data, onChange }) {
   const set = (key, value) => onChange({ ...data, [key]: value })
@@ -43,11 +49,59 @@ export function SiteInfoEditor({ data, onChange }) {
   )
 }
 
-export function HeroEditor({ data, onChange, site }) {
+function HeroVisibilityField({ hero, onChange }) {
+  const visibility = hero.imageVisibility ?? DEFAULT_HERO_IMAGE_VISIBILITY
+
+  return (
+    <div className="adm-visibility-field">
+      <div className="adm-hero-preview" style={getHeroOverlayStyle(visibility)}>
+        <img src={hero.image || defaultHeroImage} alt="" />
+        <div className="adm-hero-preview-copy">
+          <strong>
+            {hero.titleLine1 || 'Hero title'}
+            <span>{hero.titleLine2 || 'Second line'}</span>
+          </strong>
+          <small>{hero.sub || 'Hero subtitle preview'}</small>
+        </div>
+      </div>
+      <label className="adm-visibility-control">
+        <span className="adm-field-label">Image visibility: {visibility}%</span>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          step="5"
+          value={visibility}
+          onChange={(event) => onChange(Number(event.target.value))}
+        />
+        <span className="adm-visibility-scale">
+          <span>Darker</span>
+          <span>Brighter</span>
+        </span>
+        <span className="adm-field-hint">
+          Adjusts the overall tint while retaining extra darkness behind the text.
+        </span>
+      </label>
+    </div>
+  )
+}
+
+export function HeroEditor({ data, onChange, site, onUnauthorized }) {
   const set = (key, value) => onChange({ ...data, [key]: value })
   const eyebrowPreview = `${site.address.line1.split(',')[0]} · Est. ${site.established} · ${data.eyebrowTagline}`
   return (
     <>
+      <ImageUploadField
+        label="Hero background"
+        value={data.image}
+        onChange={(v) => set('image', v)}
+        onUpload={uploadHeroImage}
+        onUnauthorized={onUnauthorized}
+        alt="Hero background preview"
+        previewVariant="landscape"
+        hint="JPG, PNG, or WebP up to 5MB. Use a wide, high-resolution action photo."
+      />
+      <HeroVisibilityField hero={data} onChange={(v) => set('imageVisibility', v)} />
       <Field
         label="Eyebrow tagline"
         value={data.eyebrowTagline}

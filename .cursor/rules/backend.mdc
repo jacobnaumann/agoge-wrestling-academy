@@ -20,11 +20,12 @@ alwaysApply: false
 - Admin auth: `POST /api/admin/login` bcrypt-compares against
   `ADMIN_PASSWORD_HASH`, signs a 12h JWT with `JWT_SECRET` (both required in
   `.env`, else 503). In-memory rate limit: 5 failed attempts / 15 min / IP.
-- Admin images: authenticated `POST /api/admin/coach-images` and
-  `POST /api/admin/program-images` accept one JPG/PNG/WebP up to 5MB. Shared
-  processing in `lib/imageUpload.js` validates, strips metadata, and writes
-  normalized WebP files under `data/uploads/coaches/` (640x800) or
-  `data/uploads/programs/` (1200x800). Files are served read-only from
+- Admin images: authenticated `POST /api/admin/coach-images`,
+  `POST /api/admin/program-images`, and `POST /api/admin/hero-images` accept one
+  JPG/PNG/WebP up to 5MB. Shared processing in `lib/imageUpload.js` validates,
+  strips metadata, and writes normalized WebP files under
+  `data/uploads/coaches/` (640x800), `data/uploads/programs/` (1200x800), or
+  `data/uploads/hero/` (1920x1080). Files are served read-only from
   `/api/uploads/`; the runtime upload directory is gitignored and survives deploys.
 - Models: `Review` (has `approved` flag for moderation) and `ContactMessage`
   (has `handled` flag). Both use timestamps and input length limits.

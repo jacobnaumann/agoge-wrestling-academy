@@ -5,15 +5,12 @@
   padding: 100px 4% 80px;
 }
 
-/* Hero photo with a dark tint gradient on top for text legibility.
-   Swap the url() to use a different image from src/assets. */
+/* Hero photo is set by Hero.jsx, with the bundled image as its fallback. */
 .hero-bg {
   position: absolute; inset: 0;
-  background-image:
-    linear-gradient(150deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.25) 55%, rgba(0, 0, 0, 0.35) 100%),
-    url('../assets/hero-competition-wrestlers.png');
-  background-size: cover, cover;
-  background-position: center, center 30%;
+  background-color: var(--black);
+  background-size: cover;
+  background-position: center 30%;
 }
 
 /* Subtle texture field */
@@ -33,7 +30,14 @@
 .hero-bg::after {
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.55) 35%, rgba(0, 0, 0, 0.15) 65%, rgba(0, 0, 0, 0) 100%);
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.55) 35%, rgba(0, 0, 0, 0.15) 65%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(
+      150deg,
+      rgba(0, 0, 0, var(--hero-overlay-start, 0.55)) 0%,
+      rgba(0, 0, 0, var(--hero-overlay-middle, 0.25)) 55%,
+      rgba(0, 0, 0, var(--hero-overlay-end, 0.35)) 100%
+    );
 }
 
 .hero-content { position: relative; z-index: 2; max-width: 720px; }
@@ -108,7 +112,7 @@
   }
   /* Hero photos have their subject on the right side — keep that side
      in frame when the viewport narrows and crops the image. */
-  .hero-bg { background-position: center, 75% 30%; }
+  .hero-bg { background-position: 75% 30%; }
   .hero-content { max-width: 100%; }
   .hero h1 { font-size: clamp(2.8rem, 13vw, 4.5rem); margin-bottom: 1.1rem; }
   .hero-sub { font-size: 1rem; margin-bottom: 1.8rem; }
