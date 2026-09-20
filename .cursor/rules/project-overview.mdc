@@ -95,8 +95,10 @@ and `backend/data/content.json` (live admin-edited content).
   SSL: Cloudflare edge cert + Cloudflare Origin CA cert on the droplet at
   `/etc/ssl/cloudflare/` (local copies in `deploy/certs/`, gitignored).
   SSL mode Full (strict); Always Use HTTPS on. Origin cert valid 15 years.
-- To deploy: run `.\deploy\deploy.ps1` from the repo root (builds the frontend,
-  uploads via scp, fixes file perms — Windows scp lands 600/700 — restarts PM2).
+- To deploy: run `.\deploy\deploy.ps1` from the repo root. The script requires a
+  clean Git working tree and pushes the checked-out branch to GitHub before it
+  builds the frontend, uploads via scp, fixes file perms — Windows scp lands
+  600/700 — and restarts PM2. A failed push aborts deployment.
   The backend tar EXCLUDES `backend/data/content.json` so admin edits on the
  droplet are never overwritten by a deploy; it also excludes
  `backend/data/uploads/` so uploaded coach portraits are preserved.

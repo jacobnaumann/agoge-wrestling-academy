@@ -10,6 +10,27 @@ $ErrorActionPreference = 'Stop'
 $Server = 'root@204.48.16.139'
 $Root = Split-Path $PSScriptRoot -Parent
 
+Write-Host '== Verifying and pushing Git branch =='
+Push-Location $Root
+try {
+    $Branch = (git branch --show-current).Trim()
+    if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($Branch)) {
+        throw 'Deployment requires a checked-out Git branch'
+    }
+
+    $WorkingTreeChanges = git status --porcelain
+    if ($LASTEXITCODE -ne 0) { throw 'Unable to inspect the Git working tree' }
+    if ($WorkingTreeChanges) {
+        throw 'Commit or discard all local changes before deploying'
+    }
+
+    git push origin $Branch
+    if ($LASTEXITCODE -ne 0) { throw "Failed to push branch '$Branch' to GitHub" }
+}
+finally {
+    Pop-Location
+}
+
 if (-not $BackendOnly) {
     if (-not $SkipBuild) {
         Write-Host '== Building frontend =='
