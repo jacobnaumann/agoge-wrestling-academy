@@ -52,7 +52,17 @@ the backend normalizes them to 640x800 WebP files in
 `backend/data/uploads/coaches/` and serves them from `/api/uploads/`. Runtime
 uploads are gitignored and excluded from deploy archives so production images
 survive deployments. Staff cards display these portraits as full-card
-backgrounds beneath a dark overlay, with a Lambda watermark fallback.
+backgrounds beneath a dark overlay, with a Lambda watermark fallback. Each
+coach has an admin-controlled `photoVisibility` slider (0–100, default 50)
+that adjusts the overlay independently with a live preview. Every coach can
+also have multiple labeled accolade groups; legacy assistant accolade arrays
+remain readable until resaved through the Staff editor.
+
+Program cards support optional wide background photos uploaded through
+`POST /api/admin/program-images`, normalized to 1200x800 WebP files under
+`backend/data/uploads/programs/`. Each program has an independent
+`imageVisibility` slider with a live admin preview; cards without images keep
+the standard brown background.
 
 ## Current placeholder status
 

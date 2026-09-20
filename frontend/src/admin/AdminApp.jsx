@@ -177,7 +177,13 @@ export default function AdminApp() {
       case 'about':
         return <AboutEditor data={content.about} onChange={(v) => update('about', v)} />
       case 'programs':
-        return <ProgramsEditor data={content.programs} onChange={(v) => update('programs', v)} />
+        return (
+          <ProgramsEditor
+            data={content.programs}
+            onChange={(v) => update('programs', v)}
+            onUnauthorized={expireSession}
+          />
+        )
       case 'schedule':
         return (
           <ScheduleEditor

@@ -1,18 +1,33 @@
 import { useContent } from '../data/ContentContext'
+import { getProgramOverlayStyle } from '../utils/programCard'
 import './Programs.css'
 
 function ProgramCard({ program }) {
   const external = program.external
   return (
     <a
-      className="program-card"
+      className={`program-card${program.image ? ' has-image' : ''}`}
       href={program.link}
+      style={getProgramOverlayStyle(program.imageVisibility)}
       {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
     >
-      <div className="program-age">{program.age}</div>
-      <div className="program-name">{program.name}</div>
-      <div className="program-desc">{program.desc}</div>
-      <span className="program-arrow">{program.arrowText || 'Register Now'} →</span>
+      {program.image && (
+        <img
+          className="program-card-image"
+          src={program.image}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          onError={(event) => event.currentTarget.remove()}
+        />
+      )}
+      <span className="program-card-overlay" aria-hidden="true" />
+      <div className="program-card-content">
+        <div className="program-age">{program.age}</div>
+        <div className="program-name">{program.name}</div>
+        <div className="program-desc">{program.desc}</div>
+        <span className="program-arrow">{program.arrowText || 'Register Now'} →</span>
+      </div>
     </a>
   )
 }

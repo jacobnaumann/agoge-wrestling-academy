@@ -1,9 +1,66 @@
 // Editors for: Programs, Schedule (grid + legend + tiers).
-import { Field, CheckboxField, ListEditor, SelectField } from '../fields.jsx'
+import { uploadProgramImage } from '../api.js'
+import { Field, CheckboxField, ImageUploadField, ListEditor, SelectField } from '../fields.jsx'
+import {
+  DEFAULT_PROGRAM_IMAGE_VISIBILITY,
+  getProgramOverlayStyle,
+} from '../../utils/programCard.js'
 
-function ProgramFields({ item, update }) {
+function ProgramVisibilityField({ program, onChange }) {
+  const visibility = program.imageVisibility ?? DEFAULT_PROGRAM_IMAGE_VISIBILITY
+
+  return (
+    <div className="adm-visibility-field">
+      <div className="adm-program-preview" style={getProgramOverlayStyle(visibility)}>
+        <span className="adm-program-preview-watermark" aria-hidden="true">Λ</span>
+        {program.image && (
+          <img src={program.image} alt="" onError={(event) => event.currentTarget.remove()} />
+        )}
+        <div className="adm-program-preview-copy">
+          <span>{program.age || 'Age range'}</span>
+          <strong>{program.name || 'Program name'}</strong>
+          <small>{program.desc || 'Program description preview'}</small>
+        </div>
+      </div>
+      <label className="adm-visibility-control">
+        <span className="adm-field-label">Image visibility: {visibility}%</span>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          step="5"
+          value={visibility}
+          onChange={(event) => onChange(Number(event.target.value))}
+        />
+        <span className="adm-visibility-scale">
+          <span>Darker</span>
+          <span>Brighter</span>
+        </span>
+        <span className="adm-field-hint">
+          Adjusts the dark overlay for this program without changing text opacity.
+        </span>
+      </label>
+    </div>
+  )
+}
+
+function ProgramFields({ item, update, onUnauthorized }) {
   return (
     <>
+      <ImageUploadField
+        label="Background image"
+        value={item.image}
+        onChange={(v) => update({ ...item, image: v })}
+        onUpload={uploadProgramImage}
+        onUnauthorized={onUnauthorized}
+        alt={`${item.name || 'Program'} background preview`}
+        previewVariant="landscape"
+        hint="JPG, PNG, or WebP up to 5MB. Use a wide, centered action photo."
+      />
+      <ProgramVisibilityField
+        program={item}
+        onChange={(v) => update({ ...item, imageVisibility: v })}
+      />
       <div className="adm-grid-2">
         <Field label="Age range / tag" value={item.age} onChange={(v) => update({ ...item, age: v })} />
         <Field label="Program name" value={item.name} onChange={(v) => update({ ...item, name: v })} />
@@ -40,8 +97,16 @@ function ProgramFields({ item, update }) {
   )
 }
 
-export function ProgramsEditor({ data, onChange }) {
-  const blank = { age: '', name: '', desc: '', slug: '', external: true }
+export function ProgramsEditor({ data, onChange, onUnauthorized }) {
+  const blank = {
+    age: '',
+    name: '',
+    image: '',
+    imageVisibility: DEFAULT_PROGRAM_IMAGE_VISIBILITY,
+    desc: '',
+    slug: '',
+    external: true,
+  }
   return (
     <>
       <ListEditor
@@ -51,7 +116,9 @@ export function ProgramsEditor({ data, onChange }) {
         blankItem={blank}
         itemTitle={(p) => p.name || 'New program'}
         addLabel="Add program"
-        renderItem={(item, update) => <ProgramFields item={item} update={update} />}
+        renderItem={(item, update) => (
+          <ProgramFields item={item} update={update} onUnauthorized={onUnauthorized} />
+        )}
       />
       <ListEditor
         label="Secondary programs (bottom row)"
@@ -60,7 +127,9 @@ export function ProgramsEditor({ data, onChange }) {
         blankItem={blank}
         itemTitle={(p) => p.name || 'New program'}
         addLabel="Add program"
-        renderItem={(item, update) => <ProgramFields item={item} update={update} />}
+        renderItem={(item, update) => (
+          <ProgramFields item={item} update={update} onUnauthorized={onUnauthorized} />
+        )}
       />
     </>
   )

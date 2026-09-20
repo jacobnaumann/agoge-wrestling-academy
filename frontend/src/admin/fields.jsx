@@ -64,6 +64,8 @@ export function ImageUploadField({
   onUpload,
   onUnauthorized,
   alt = 'Image preview',
+  previewVariant = 'portrait',
+  hint = 'JPG, PNG, or WebP up to 5MB. Use a vertical, centered portrait.',
 }) {
   const inputId = useId()
   const inputRef = useRef(null)
@@ -92,7 +94,7 @@ export function ImageUploadField({
     <div className="adm-image-field">
       <span className="adm-field-label">{label}</span>
       <div className="adm-image-field-row">
-        <div className={`adm-image-preview${value ? '' : ' is-empty'}`}>
+        <div className={`adm-image-preview ${previewVariant === 'landscape' ? 'is-landscape' : ''}${value ? '' : ' is-empty'}`}>
           {value ? <img src={value} alt={alt} /> : <span aria-hidden="true">Λ</span>}
         </div>
         <div className="adm-image-actions">
@@ -118,7 +120,7 @@ export function ImageUploadField({
               Remove
             </button>
           )}
-          <span className="adm-field-hint">JPG, PNG, or WebP up to 5MB. Use a vertical, centered portrait.</span>
+          <span className="adm-field-hint">{hint}</span>
           {error && <span className="adm-image-error" role="alert">{error}</span>}
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { useContent } from '../data/ContentContext'
+import { getCoachAccoladeGroups, getCoachOverlayStyle } from '../utils/coachCard'
 import './Staff.css'
 
 function AccoladeList({ items }) {
@@ -8,6 +9,22 @@ function AccoladeList({ items }) {
         <li key={a}>{a}</li>
       ))}
     </ul>
+  )
+}
+
+function CoachAccoladeGroups({ coach }) {
+  const groups = getCoachAccoladeGroups(coach)
+  if (groups.length === 0) return null
+
+  return (
+    <div className="staff-accolade-groups">
+      {groups.map((group, index) => (
+        <div className="staff-accolade-group" key={`${group.label}-${index}`}>
+          {group.label && <div className="accolades-section-label">{group.label}</div>}
+          <AccoladeList items={group.items ?? []} />
+        </div>
+      ))}
+    </div>
   )
 }
 
@@ -58,7 +75,7 @@ export default function Staff() {
           <h2 className="section-title">Meet the Coaches</h2>
         </div>
         <div className="staff-grid">
-          <div className="staff-card head-coach">
+          <div className="staff-card head-coach" style={getCoachOverlayStyle(head.photoVisibility)}>
             <CoachBackground coach={head} />
             <div className="staff-card-content">
               <CoachIdentity coach={head} showEmail />
@@ -78,11 +95,15 @@ export default function Staff() {
           </div>
 
           {staff.assistants.map((coach) => (
-            <div className="staff-card" key={coach.name}>
+            <div
+              className="staff-card"
+              key={coach.name}
+              style={getCoachOverlayStyle(coach.photoVisibility)}
+            >
               <CoachBackground coach={coach} />
               <div className="staff-card-content">
                 <CoachIdentity coach={coach} />
-                <AccoladeList items={coach.accolades} />
+                <CoachAccoladeGroups coach={coach} />
               </div>
             </div>
           ))}

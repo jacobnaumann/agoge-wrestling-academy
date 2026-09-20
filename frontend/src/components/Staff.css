@@ -40,8 +40,12 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  background:
-    linear-gradient(180deg, rgba(12, 9, 6, 0.86) 0%, rgba(12, 9, 6, 0.6) 48%, rgba(12, 9, 6, 0.82) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(12, 9, 6, var(--staff-overlay-top, 0.86)) 0%,
+    rgba(12, 9, 6, var(--staff-overlay-middle, 0.6)) 48%,
+    rgba(12, 9, 6, var(--staff-overlay-bottom, 0.82)) 100%
+  );
 }
 
 .staff-card-image {
@@ -110,6 +114,10 @@
 
 .staff-accolades { list-style: none; margin-top: 1.5rem; }
 .staff-accolade-column .staff-accolades { margin-top: 0; }
+.staff-accolade-groups { margin-top: 1.5rem; }
+.staff-accolade-groups .staff-accolades { margin-top: 0; }
+.staff-accolade-groups .accolades-section-label { margin-top: 0; }
+.staff-accolade-group + .staff-accolade-group { margin-top: 1.2rem; }
 .staff-accolades li {
   font-size: 0.875rem; color: var(--gray);
   padding: 0.38rem 0;

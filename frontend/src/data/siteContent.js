@@ -52,6 +52,8 @@ export const defaultContent = {
       {
         age: 'Ages 4–7',
         name: 'Spartans Youth',
+        image: '',
+        imageVisibility: 50,
         desc: '"Get them comfortable on the mat." Introduction to wrestling fundamentals in a fun, safe, age-appropriate environment.',
         slug: 'spartans-youth',
         external: true,
@@ -59,6 +61,8 @@ export const defaultContent = {
       {
         age: 'Ages 8–14',
         name: 'Hoplites',
+        image: '',
+        imageVisibility: 50,
         desc: '"Get them to love wrestling." Intermediate training focused on technique, competition prep, and team culture.',
         slug: 'hoplites',
         external: true,
@@ -66,6 +70,8 @@ export const defaultContent = {
       {
         age: 'HS & Elite Youth',
         name: 'Elite',
+        image: '',
+        imageVisibility: 50,
         desc: '"Get them obsessed." Elite-level training for serious competitors. High intensity, high commitment, high results.',
         slug: 'elite',
         external: true,
@@ -75,6 +81,8 @@ export const defaultContent = {
       {
         age: 'Flexible Schedule',
         name: 'Homeschool Practice',
+        image: '',
+        imageVisibility: 50,
         desc: 'Daytime sessions designed for homeschooled athletes seeking structured training, development, and community.',
         slug: 'homeschool',
         external: true,
@@ -82,6 +90,8 @@ export const defaultContent = {
       {
         age: 'All Ages',
         name: 'Camps & Clinics',
+        image: '',
+        imageVisibility: 50,
         desc: 'Intensive multi-day camps, open mat nights, and specialty clinics throughout the year.',
         link: '#schedule',
         external: false,
@@ -179,6 +189,7 @@ export const defaultContent = {
       role: 'Head Coach & Owner',
       name: 'Nate Naumann',
       image: '',
+      photoVisibility: 50,
       phone: '727.723.5090',
       email: 'info@agogewrestling.com',
       columns: [
@@ -216,29 +227,53 @@ export const defaultContent = {
         role: 'Elite Head Assistant',
         name: 'Coach Placeholder Two',
         image: '',
+        photoVisibility: 50,
         phone: '000.000.0000',
-        accolades: ['State Champion', 'NCAA Qualifier', 'Placeholder accolade'],
+        accoladeGroups: [
+          {
+            label: 'Accolades',
+            items: ['State Champion', 'NCAA Qualifier', 'Placeholder accolade'],
+          },
+        ],
       },
       {
         role: 'Hoplites Head Coach',
         name: 'Coach Placeholder Three',
         image: '',
+        photoVisibility: 50,
         phone: '000.000.0000',
-        accolades: ['State Placer', 'College Athlete', 'Placeholder accolade'],
+        accoladeGroups: [
+          {
+            label: 'Accolades',
+            items: ['State Placer', 'College Athlete', 'Placeholder accolade'],
+          },
+        ],
       },
       {
         role: 'Spartans Youth Head Coach',
         name: 'Coach Placeholder Four',
         image: '',
+        photoVisibility: 50,
         phone: '000.000.0000',
-        accolades: ['Youth development specialist', 'Placeholder accolade'],
+        accoladeGroups: [
+          {
+            label: 'Accolades',
+            items: ['Youth development specialist', 'Placeholder accolade'],
+          },
+        ],
       },
       {
         role: 'Homeschool Head Coach',
         name: 'Coach Placeholder Five',
         image: '',
+        photoVisibility: 50,
         phone: '000.000.0000',
-        accolades: ['State Qualifier', 'Placeholder accolade'],
+        accoladeGroups: [
+          {
+            label: 'Accolades',
+            items: ['State Qualifier', 'Placeholder accolade'],
+          },
+        ],
       },
     ],
   },

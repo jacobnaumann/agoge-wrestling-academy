@@ -56,11 +56,11 @@ export async function saveContent(content) {
   return data
 }
 
-export async function uploadCoachImage(file) {
+async function uploadAdminImage(endpoint, file) {
   const body = new FormData()
   body.append('image', file)
 
-  const res = await fetch('/api/admin/coach-images', {
+  const res = await fetch(endpoint, {
     method: 'POST',
     headers: { Authorization: `Bearer ${getToken()}` },
     body,
@@ -73,4 +73,12 @@ export async function uploadCoachImage(file) {
   }
   if (!res.ok) throw new Error(data.error || 'Failed to upload image.')
   return data.image
+}
+
+export function uploadCoachImage(file) {
+  return uploadAdminImage('/api/admin/coach-images', file)
+}
+
+export function uploadProgramImage(file) {
+  return uploadAdminImage('/api/admin/program-images', file)
 }

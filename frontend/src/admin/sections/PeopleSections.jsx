@@ -1,6 +1,11 @@
 // Editors for: Competitions, Staff, Personal Training, Camps.
 import { uploadCoachImage } from '../api.js'
 import { Field, CheckboxField, ImageUploadField, ListEditor, StringListEditor } from '../fields.jsx'
+import {
+  DEFAULT_PHOTO_VISIBILITY,
+  getCoachAccoladeGroups,
+  getCoachOverlayStyle,
+} from '../../utils/coachCard.js'
 
 export function CompetitionsEditor({ data, onChange }) {
   return (
@@ -56,6 +61,49 @@ function AccoladeGroupsEditor({ label, groups, onChange }) {
   )
 }
 
+function withAssistantAccoladeGroups(coach, accoladeGroups) {
+  const next = { ...coach, accoladeGroups }
+  delete next.accolades
+  return next
+}
+
+function CoachVisibilityField({ coach, onChange }) {
+  const visibility = coach.photoVisibility ?? DEFAULT_PHOTO_VISIBILITY
+
+  return (
+    <div className="adm-visibility-field">
+      <div className="adm-visibility-preview" style={getCoachOverlayStyle(visibility)}>
+        <span className="adm-visibility-watermark" aria-hidden="true">Λ</span>
+        {coach.image && (
+          <img src={coach.image} alt="" onError={(event) => event.currentTarget.remove()} />
+        )}
+        <div className="adm-visibility-preview-copy">
+          <span>{coach.role || 'Coach role'}</span>
+          <strong>{coach.name || 'Coach name'}</strong>
+        </div>
+      </div>
+      <label className="adm-visibility-control">
+        <span className="adm-field-label">Photo visibility: {visibility}%</span>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          step="5"
+          value={visibility}
+          onChange={(event) => onChange(Number(event.target.value))}
+        />
+        <span className="adm-visibility-scale">
+          <span>Darker</span>
+          <span>Brighter</span>
+        </span>
+        <span className="adm-field-hint">
+          Adjusts the dark overlay for this coach without changing text opacity.
+        </span>
+      </label>
+    </div>
+  )
+}
+
 export function StaffEditor({ data, onChange, onUnauthorized }) {
   const head = data.headCoach
   const setHead = (key, value) => onChange({ ...data, headCoach: { ...head, [key]: value } })
@@ -73,6 +121,7 @@ export function StaffEditor({ data, onChange, onUnauthorized }) {
         onUnauthorized={onUnauthorized}
         alt={`${head.name || 'Head coach'} portrait preview`}
       />
+      <CoachVisibilityField coach={head} onChange={(v) => setHead('photoVisibility', v)} />
       <div className="adm-grid-2">
         <Field label="Role" value={head.role} onChange={(v) => setHead('role', v)} />
         <Field label="Name" value={head.name} onChange={(v) => setHead('name', v)} />
@@ -94,7 +143,7 @@ export function StaffEditor({ data, onChange, onUnauthorized }) {
         label="Assistant coaches"
         items={data.assistants}
         onChange={(v) => onChange({ ...data, assistants: v })}
-        blankItem={{ role: '', name: '', image: '', phone: '', accolades: [] }}
+        blankItem={{ role: '', name: '', image: '', photoVisibility: 50, phone: '', accoladeGroups: [] }}
         itemTitle={(c) => c.name || 'New coach'}
         addLabel="Add coach"
         renderItem={(item, update) => (
@@ -107,16 +156,19 @@ export function StaffEditor({ data, onChange, onUnauthorized }) {
               onUnauthorized={onUnauthorized}
               alt={`${item.name || 'Assistant coach'} portrait preview`}
             />
+            <CoachVisibilityField
+              coach={item}
+              onChange={(v) => update({ ...item, photoVisibility: v })}
+            />
             <div className="adm-grid-3">
               <Field label="Role" value={item.role} onChange={(v) => update({ ...item, role: v })} />
               <Field label="Name" value={item.name} onChange={(v) => update({ ...item, name: v })} />
               <Field label="Phone" value={item.phone} onChange={(v) => update({ ...item, phone: v })} />
             </div>
-            <StringListEditor
-              label="Accolades"
-              items={item.accolades}
-              onChange={(v) => update({ ...item, accolades: v })}
-              addLabel="Add accolade"
+            <AccoladeGroupsEditor
+              label="Accolade groups"
+              groups={getCoachAccoladeGroups(item)}
+              onChange={(v) => update(withAssistantAccoladeGroups(item, v))}
             />
           </>
         )}

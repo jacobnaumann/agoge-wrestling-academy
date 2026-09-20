@@ -23,11 +23,22 @@ alwaysApply: false
   router): password login → JWT in sessionStorage → per-section forms →
   `PUT /api/content`. Reusable form fields live in `src/admin/fields.jsx`,
   section editors in `src/admin/sections/`, API calls in `src/admin/api.js`.
-- Staff coach objects may include an optional `image` URL. The Staff admin
-  editor uploads portraits immediately through `/api/admin/coach-images`, then
-  the normal content Save persists the returned URL. Public staff cards use the
-  portrait as a full-card background beneath a dark readability overlay and
-  show a branded watermark when no image exists or an image cannot load.
+- Staff coach objects may include an optional `image` URL and a
+  `photoVisibility` value from 0–100 (default 50). The Staff admin editor
+  uploads portraits immediately through `/api/admin/coach-images` and provides
+  a per-coach visibility slider with a live preview; the normal content Save
+  persists both values. Public staff cards use the portrait as a full-card
+  background beneath the coach-specific dark overlay and show a branded
+  watermark when no image exists or an image cannot load.
+- Assistant coach accolades use `accoladeGroups: [{ label, items }]`, editable
+  with the same add/remove/reorder group controls used for the head coach.
+  Rendering and the admin editor retain a fallback for legacy assistant
+  `accolades: string[]` content until that coach's groups are saved.
+- Program objects may include `image` and `imageVisibility` (0–100, default 50).
+  The Programs admin editor uploads wide photos through
+  `/api/admin/program-images` and provides a per-program live visibility
+  preview. Public program cards render the photo beneath a dark overlay; cards
+  without images retain the standard brown background.
 - Linting: `npm run lint` (oxlint).
 - Reviews currently persist to localStorage (`agoge-reviews` key) and the contact
   form falls back to mailto. Both have TODOs to switch to `/api/reviews` and
